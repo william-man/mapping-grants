@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    protected $connection = 'mysql';
     /**
      * Run the migrations.
      */
@@ -14,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('grants', function (Blueprint $table) {
             $table->id();
+            $table->string('grantsID');
+            $table->text('title');
+            $table->text('description');
+            $table->char('currency', 3);
+            $table->decimal('amountAwarded', 15, 2);
+            $table->date('awardDate');
+
+            $table->json('fundingOrganization');
+            $table->json('recipientOrganization')->nullable();
+            $table->json('recipientIndividual')->nullable();
+            $table->string('recipientPostcode')->nullable();
+
+            $table->index('grantsID');
+            $table->index('recipientPostcode');
+
             $table->timestamps();
         });
     }
