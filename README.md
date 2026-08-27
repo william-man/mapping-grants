@@ -9,6 +9,7 @@ L&D project for mapping and querying nested JSON grant data.
 - **Frontend:** Vanilla JS (class-based, no framework)
 - **Infrastructure:** Docker via Laravel Sail
 - **DB Admin:** Adminer
+- Data import: Python (ijson + pymysql) — see import/
 
 ## Getting Started
 
@@ -16,6 +17,7 @@ L&D project for mapping and querying nested JSON grant data.
 
 - Docker Desktop
 - PHP + Composer (for initial setup only; app runs in containers afterward)
+- Python 3 (for the data import pipeline, run outside Docker — see below)
 
 ### Setup
 
@@ -28,8 +30,12 @@ cp .env.example .env
 php artisan key:generate
 
 # Start containers (app, mariadb, adminer)
-./vendor/bin/sail up -d
+./script/server
+```
 
+### In a new terminal:
+
+```bash
 # Run migrations
 ./vendor/bin/sail artisan migrate
 
@@ -48,12 +54,23 @@ php artisan key:generate
 
 ## Data
 
-Raw JSON source files live in `data/` (not committed — see `.gitignore`).
+### Getting the source files
 
-Data model approach: nested JSON is loaded as-is into a `json` column initially.
-Frequently-queried fields will be promoted to dedicated columns or generated
-columns as the schema stabilizes.
+Raw JSON source files are not committed (see .gitignore) — grant data is published as 360Giving-format JSON, one file per funder.
 
-## Project Status
+Download the source archive and unzip it so you end up with:
+```
+   data/json_all/*.json
+```
 
-Week 1 — infrastructure and tooling setup. Data loading and mapping work in progress.
+### Running the import
+
+The import pipeline lives in `import/` and runs outside Docker, directly against the database via its host-forwarded port (127.0.0.1:3306, not the mariadb hostname — that only resolves inside the Docker network).
+
+```bash
+cd import
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python3 main_import.py
+```
