@@ -52,6 +52,13 @@ php artisan key:generate
 | Adminer   | http://localhost:8080    | DB browser (server: `mariadb`) |
 | MariaDB   | localhost:3306           | Credentials in `.env`          |
 
+**Adminer login:**
+- System: `MySQL/MariaDB`
+- Server: `mariadb`
+- Username: `sail`
+- Password: `password`
+- Database: `laravel`
+
 ## Data
 
 ### Getting the source files
@@ -60,7 +67,7 @@ Raw JSON source files are not committed (see .gitignore) — grant data is publi
 
 Download the source archive and unzip it so you end up with:
 ```
-   data/json_all/*.json
+data/json_all/*.json
 ```
 
 ### Running the import
@@ -74,3 +81,16 @@ source venv/bin/activate
 pip install -r requirements.txt
 python3 main_import.py
 ```
+
+## API
+
+Base URL: `http://localhost/api/v1`
+
+| Method | Route | Returns |
+|---|---|---|
+| GET | `/grants` | All grants, paginated (20 per page) |
+| GET | `/grants/{id}` | One grant by its internal id |
+| GET | `/recipient-postcodes` | All unique, non-null postcode values |
+| GET | `/funding-organisations` | All unique funders (id and name) |
+
+Route files live in `routes/api/`, one per resource, auto-loaded by `routes/api.php` — no manual registration needed for existing routes.
