@@ -20,15 +20,16 @@ return new class extends Migration
             $table->decimal('amountAwarded', 15, 2);
             $table->date('awardDate');
 
-            $table->json('fundingOrganization');
-            $table->json('recipientOrganization')->nullable();
-            $table->json('recipientIndividual')->nullable();
-            $table->string('recipientPostcode')->nullable();
+            $table->string('fundingOrganisation');
+            $table->foreign('fundingOrganisation')->references('organisationID')->on('funding_organisations')->onDelete('cascade');
+
+            $table->string('recipientOrganisation')->nullable();
+            $table->foreign('recipientOrganisation')->references('organisationID')->on('recipient_organisations')->onDelete('cascade');
+          
+            $table->string('recipientIndividual')->nullable();
+            $table->foreign('recipientIndividual')->references('individualID')->on('recipient_individuals')->onDelete('cascade');
 
             $table->index('grantsID');
-            $table->index('recipientPostcode');
-
-            $table->timestamps();
         });
     }
 
