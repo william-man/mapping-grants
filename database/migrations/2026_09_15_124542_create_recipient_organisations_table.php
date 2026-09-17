@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('organisationID')->unique();
             $table->string('name');
-            $table->string('postcode')->nullable();
+            $table->string('postalCode')->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
         });

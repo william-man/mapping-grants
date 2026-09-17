@@ -18,7 +18,6 @@ return new class extends Migration
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->string('regionName')->nullable();
-            $table->string('regionCode')->nullable();
         });
     }
 
