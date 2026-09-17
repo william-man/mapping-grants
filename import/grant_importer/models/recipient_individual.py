@@ -30,7 +30,7 @@ class RecipientIndividual:
 
     def get_location(self):
         regionName = self.data.get('recipientRegionName', '')
-        coords = REGION_COORDINATES.get(regionName.lower(), (None, None))
+        coords = self.REGION_COORDINATES.get(regionName.lower(), (None, None))
 
         return {
             'latitude': coords[0],
