@@ -1,0 +1,38 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: 1rem;
+    background: #fff;
+    box-shadow: 0 1px 4px rgb(74, 74, 74);
+    z-index: 1000;
+}
+
+main {
+    flex: 1;
+    max-width: 1409px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    margin-top: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+#map {
+    margin-top: 24px;
+    width: 100%;
+    height: 100%;
+}
+
+footer {
+    margin-top: 24px;
+}
