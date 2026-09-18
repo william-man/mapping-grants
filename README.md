@@ -6,12 +6,27 @@ L&D project for mapping and querying nested JSON grant data.
 
 - **Backend:** Laravel (PHP) + Vite
 - **Database:** MariaDB
-- **Frontend:** Vanilla JS (class-based, no framework)
+- **Frontend:** Vanilla JS
 - **Infrastructure:** Docker via Laravel Sail
 - **DB Admin:** Adminer
 - Data import: Python (ijson + pymysql) — see import/
 
-## Getting Started
+## Data
+
+### Getting the source files
+
+Download the source archive and unzip it so you end up with:
+
+```
+data/json_all/*.json
+```
+A UK postcode-to-coordinate lookup is also required for local geocoding.
+Download it from
+[freemaptools](https://www.freemaptools.com/download-uk-postcode-lat-lng.htm)
+(CSV, `id,postcode,latitude,longitude`) and place it at:
+```
+data/postcodes/ukpostcodes.csv
+```
 
 ### Prerequisites
 
@@ -80,7 +95,15 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python3 main_import.py
+python3 postcode_importer.py
 ```
+
+`main_import.py` processes the 360Giving JSON files into `grants`,
+`funding_organisations`, `recipient_organisations` and
+`recipient_individuals`.
+
+`postcode_importer.py` loads the postcode lookup CSV into the
+`postcodes` table.
 
 ## API
 
@@ -90,7 +113,11 @@ Base URL: `http://localhost/api/v1`
 |---|---|---|
 | GET | `/grants` | All grants, paginated (20 per page) |
 | GET | `/grants/{id}` | One grant by its internal id |
+| GET | `/grants/mappable` | Grants with resolved recipient coordinates, for the map |
 | GET | `/recipient-postcodes` | All unique, non-null postcode values |
 | GET | `/funding-organisations` | All unique funders (id and name) |
 
-Route files live in `routes/api/`, one per resource, auto-loaded by `routes/api.php` — no manual registration needed for existing routes.
+## Map
+
+A Leaflet-based map is available at `/map`, plotting grants from
+`/grants/mappable`.
