@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        @vite(['resources/js/search.js', 'resources/js/map.js', 'resources/css/map.css'])
+        @vite(['resources/js/search.js', 'resources/js/map.js', 'resources/js/tiles.js', 'resources/css/map.css'])
     </head>
     <body>
         <header>
@@ -12,7 +12,12 @@
                 <input type="text" id="postcode-input" placeholder="Enter a postcode">
                 <button type="submit">Search</button>
             </form>
-            <div id="map"></div>
+            <div class="map-layout">
+                <div id="map"></div>
+                <aside id="tile-summary">
+                    <p>Click an area on the map to see its grants.</p>
+                </aside>
+            </div>
         </main>
         <footer></footer>
     </body>

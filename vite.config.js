@@ -7,11 +7,13 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css', 
-                'resources/js/app.js', 
-                'resources/js/map.js', 
+                'resources/css/app.css',
+                'resources/css/map.css',
+                'resources/js/app.js',
+                'resources/js/map.js',
                 'resources/js/search.js',
-                'resources/css/map.css'],
+                'resources/js/tiles.js',
+            ],
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {
